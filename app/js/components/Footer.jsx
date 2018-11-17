@@ -1,70 +1,27 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-import { setVisibilityFilter } from '../actions';
+const FilterLink = ({ filter, children }) => (
+ <NavLink exact to={'/' + (filter === 'all' ? '' : filter)} activeStyle={{ textDecoration: 'none', color: 'black' }}>
+    {children}
+  </NavLink>
+);
 
-const Link = ({
-  active,
-  children,
-  onClick
-  }) => {
-  if (active) {
-    return <span>{children}</span>;
-  }
-
-  return (
-    <a href='#'
-       onClick={e => {
-         e.preventDefault();
-         onClick();
-       }}
-      >
-      {children}
-    </a>
-  );
-};
-
-const mapStateProps = (
-  state,
-  ownProps
-) => {
-  return {
-    active:
-      ownProps.filter ===
-      state.visibilityFilter
-  };
-};
-const mapDispatchProps = (
-  dispatch,
-  ownProps
-) => {
-  return {
-    onClick: () => {
-      dispatch(
-        setVisibilityFilter(ownProps.filter)
-      );
-    }
-  };
-};
-
-const FilterLink = connect(
-  mapStateProps,
-  mapDispatchProps
-)(Link);
 
 export default () => (
   <p>
     Show:
     {' '}
-    <FilterLink filter='SHOW_ALL'>
+    <FilterLink filter='all'>
       All
     </FilterLink>
     {', '}
-    <FilterLink filter='SHOW_ACTIVE'>
+    <FilterLink filter='active'>
       Active
     </FilterLink>
     {', '}
-    <FilterLink filter='SHOW_COMPLETED'>
+    <FilterLink filter='completed'>
       Completed
     </FilterLink>
   </p>

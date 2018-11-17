@@ -17,7 +17,7 @@ const TodoApp = () => (
 export default (
   <Provider store={store}>
     <BrowserRouter>
-     <Route path='/' component={TodoApp} />
+     <Route path='/:filter?' component={TodoApp} />
     </BrowserRouter>
   </Provider>
 )
